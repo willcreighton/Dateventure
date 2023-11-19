@@ -15,16 +15,19 @@ public class Data : MonoBehaviour
 
     // dateventuresLength : Amount of dateventures in the dateventures dictionary
     // dateVentureCounter : Number of dateventures completed
-    int dateventuresLength, dateVentureCounter; 
+    int dateventuresLength, dateVentureCounter;
+
+    // rollsThreshold : Represents the threshold for removing from availableRolls before adding back to it
+    const int rollsThreshold = 2;
 
     // headerQuips : Pre-spin header quips, i.e. "Hey Name1 and Name2. :winky-emoji:"
     // spinningQuips : Header quips for while spinning, i.e. "What's it gonna be!? :eyes-emoji:"
     string[] headerQuips, spinningQuips;
 
-    // recentSpins : Track the 10 most recent spins
-    // availableSpins : The currently available date cards
+    // recentRolls : Track the 10 most recent rolls
+    // availableRolls : The currently available date cards
     // keys : All of the keys within dateventures
-    List<string> recentSpins, availableSpins, keys; 
+    List<string> recentRolls, availableRolls, keys; 
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +35,8 @@ public class Data : MonoBehaviour
         dateventuresLength = dateventures.Count;
         //dateventureCounter = 0; // TODO: Dynamically store the correct amount of dateventures completed
         keys = new List<string>(dateventures.Keys);
-        availableSpins = keys;
-        recentSpins = new List<string>();
+        availableRolls = keys;
+        recentRolls = new List<string>();
     }
 
     // Getter for dateventures
@@ -42,18 +45,18 @@ public class Data : MonoBehaviour
         get { return dateventures; }
     }
 
-    // Getter and setter for recentSpins
-    public List<string> RecentSpins
+    // Getter and setter for recentRolls
+    public List<string> RecentRolls
     {
-        get { return recentSpins; }
-        set { recentSpins = value; }
+        get { return recentRolls; }
+        set { recentRolls = value; }
     }
 
-    // Getter and setter for availableSpins
-    public List<string> AvailableSpins
+    // Getter and setter for availableRolls
+    public List<string> AvailableRolls
     {
-        get { return availableSpins; }
-        set { availableSpins = value; }
+        get { return availableRolls; }
+        set { availableRolls = value; }
     }
 
     // Getter for keys
@@ -66,5 +69,10 @@ public class Data : MonoBehaviour
     public int DateventuresLength
     {
         get { return dateventuresLength; }
+    }
+
+    public int RollsThreshold
+    {
+        get { return rollsThreshold; }
     }
 }

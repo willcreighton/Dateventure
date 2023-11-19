@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 850551527}
   - component: {fileID: 850551526}
   m_Layer: 5
-  m_Name: SpinButton
+  m_Name: RollButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -661,9 +661,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'SPIN!
-
-'
+  m_text: ROLL!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1b5fecd32119d2a4c875405fe2bee130, type: 2}
   m_sharedMaterial: {fileID: -6055379396714434478, guid: 1b5fecd32119d2a4c875405fe2bee130, type: 2}
@@ -844,7 +842,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -501}
+  m_AnchoredPosition: {x: 0, y: -500}
   m_SizeDelta: {x: 400, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1270742039
@@ -900,7 +898,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1669028206
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1134,7 +1132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51d9169cda155964b8e3ae30a906e02f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spinner: {fileID: 850551526}
+  rollButton: {fileID: 850551526}
+  goButton: {fileID: 1669028207}
   dateCard: {fileID: 1270742039}
   dateIdea: {fileID: 1817028061}
   dateDetails: {fileID: 363178578}

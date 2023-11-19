@@ -18,7 +18,8 @@ public class Main : MonoBehaviour
         dataScript = GetComponent<Data>();
         guiScript = GetComponent<GUI>();
 
-        guiScript.Spinner.onClick.AddListener(OnSpinnerClicked);
+        guiScript.RollButton.onClick.AddListener(OnRollButtonActivated);
+        guiScript.GoButton.onClick.AddListener(OnGoButtonActivated);
     }
 
     // Update is called once per frame
@@ -27,34 +28,50 @@ public class Main : MonoBehaviour
 
     }
 
-    void OnSpinnerClicked()
+    void OnRollButtonActivated()
     {
         string key = GenerateDateCardKey();
-        guiScript.dateIdea.text = key;
-        guiScript.dateDetails.text = dataScript.Dateventures[key];
-        guiScript.dateCard.transform.position = Vector2.zero;
+        guiScript.DateIdea.text = key;
+        guiScript.DateDetails.text = dataScript.Dateventures[key];
+
+        // Now that a date card exists, enable the GoButton
+        if (!guiScript.GoButton.IsActive())
+        {
+            guiScript.GoButton.gameObject.SetActive(true);
+        }
+
+        // TODO: Reset positions only if needed
+        guiScript.DateCard.transform.localPosition = guiScript.GuiElementPositionsData["defaultCardPosition"];
+        guiScript.RollButton.transform.localPosition = guiScript.GuiElementPositionsData["defaultRollButtonPosition"];
+        guiScript.GoButton.transform.localPosition = guiScript.GuiElementPositionsData["defaultGoButtonPosition"];
+    }
+
+    void OnGoButtonActivated()
+    {
+        guiScript.DateCard.transform.localPosition = guiScript.GuiElementPositionsData["showCardPosition"];
+        guiScript.RollButton.transform.localPosition = guiScript.GuiElementPositionsData["revealedRollButtonPosition"];
+        guiScript.GoButton.transform.localPosition = guiScript.GuiElementPositionsData["revealedGoButtonPosition"];
     }
 
     string GenerateDateCardKey()
     {
-        // Randomly select a date card key from AvailableSpins
-        int availableSpinsLength = dataScript.AvailableSpins.Count;
-        string dateCardKey = dataScript.AvailableSpins[Random.Range(0, availableSpinsLength)];
+        // Randomly select a date card key from AvailableRolls
+        int availableRollsLength = dataScript.AvailableRolls.Count;
+        string dateCardKey = dataScript.AvailableRolls[Random.Range(0, availableRollsLength)];
 
-        // Move the selected spin from AvailableSpins to RecentSpins
-        dataScript.AvailableSpins.Remove(dateCardKey);
-        dataScript.RecentSpins.Add(dateCardKey);
+        // Move the selected spin from AvailableRolls to RecentSpins
+        dataScript.AvailableRolls.Remove(dateCardKey);
+        dataScript.RecentRolls.Add(dateCardKey);
 
-        // TODO: Change 2 to a constant that tracks 10 most recent spins, so availableSpins - 10 here mayb, think on it tho
-        // Check if there are more than 2 spins in AvailableSpins
-        if (dataScript.AvailableSpins.Count > 2)
+        // If within threshold, no need to add back to AvailableRolls yet
+        if (dataScript.AvailableRolls.Count > dataScript.RollsThreshold)
         {
             return dateCardKey;
         }
 
-        // Add the first spin from RecentSpins back to AvailableSpins
-        dataScript.AvailableSpins.Add(dataScript.RecentSpins[0]);
-        dataScript.RecentSpins.RemoveAt(0);
+        // Add the first spin from RecentSpins back to AvailableRolls
+        dataScript.AvailableRolls.Add(dataScript.RecentRolls[0]);
+        dataScript.RecentRolls.RemoveAt(0);
 
         return dateCardKey;
     }

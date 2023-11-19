@@ -6,9 +6,22 @@ using TMPro;
 
 public class GUI : MonoBehaviour
 {
-    public Button spinner;
-    public RawImage dateCard;
-    public TextMeshProUGUI dateIdea, dateDetails;
+    [SerializeField] Button rollButton, goButton;
+    [SerializeField] RawImage dateCard;
+    [SerializeField] TextMeshProUGUI dateIdea, dateDetails;
+
+    Dictionary<string, Vector2> guiElementPositionData = new Dictionary<string, Vector2>
+        {
+            // DateCard
+            { "defaultCardPosition", new Vector2(0, -500) },
+            { "showCardPosition", new Vector2(0, 0) },
+
+            // RollButton and GoButton
+            { "defaultRollButtonPosition", new Vector2(0, 0) },
+            { "revealedRollButtonPosition", new Vector2(-480, 0) },
+            { "defaultGoButtonPosition", new Vector2(0, -90) },
+            { "revealedGoButtonPosition", new Vector2(-480, -90) },
+        };
 
     // Start is called before the first frame update
     void Start()
@@ -16,10 +29,18 @@ public class GUI : MonoBehaviour
         
     }
 
-    // Getter for spinner
-    public Button Spinner 
+    // Getter and setter for rollButton
+    public Button RollButton 
     {  
-        get { return spinner; } 
+        get { return rollButton; } 
+        set { rollButton = value; }
+    }
+
+    // Getter and setter for goButton
+    public Button GoButton
+    {
+        get { return goButton; }
+        set { goButton = value; }
     }
 
     // Getter and setter for dateCard
@@ -41,5 +62,10 @@ public class GUI : MonoBehaviour
     {
         get { return dateDetails; }
         set { dateDetails = value; }
+    }
+
+    public Dictionary<string, Vector2> GuiElementPositionsData
+    {
+        get { return guiElementPositionData; }
     }
 }
