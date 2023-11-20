@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Data : MonoBehaviour
+public class CoreData : MonoBehaviour
 {
     // This is a dictionary, dateventures. It holds keys : Date Idea Header, and values : Date Idea Descriptions  
     Dictionary<string, string> dateventures = new Dictionary<string, string>
@@ -14,28 +14,28 @@ public class Data : MonoBehaviour
     };
 
     // dateventuresLength : Amount of dateventures in the dateventures dictionary
-    // dateVentureCounter : Number of dateventures completed
-    int dateventuresLength, dateVentureCounter;
+    // dateventureCounter : Number of dateventures completed
+    int dateventuresLength, dateventureCounter;
 
     // rollsThreshold : Represents the threshold for removing from availableRolls before adding back to it
     const int rollsThreshold = 2;
 
     // headerQuips : Pre-spin header quips, i.e. "Hey Name1 and Name2. :winky-emoji:"
-    // spinningQuips : Header quips for while spinning, i.e. "What's it gonna be!? :eyes-emoji:"
-    string[] headerQuips, spinningQuips;
+    // rollingQuips : Header quips for while rolling, i.e. "What's it gonna be!? :eyes-emoji:"
+    string[] headerQuips, rollingQuips;
 
-    // recentRolls : Track the 10 most recent rolls
+    // recentRolls : Track the rollsThreshold most recent rolls
     // availableRolls : The currently available date cards
-    // keys : All of the keys within dateventures
-    List<string> recentRolls, availableRolls, keys; 
+    // dateKeys : All of the keys within dateventures
+    List<string> recentRolls, availableRolls, dateKeys; 
 
     // Start is called before the first frame update
     void Start()
     {
         dateventuresLength = dateventures.Count;
         //dateventureCounter = 0; // TODO: Dynamically store the correct amount of dateventures completed
-        keys = new List<string>(dateventures.Keys);
-        availableRolls = keys;
+        dateKeys = new List<string>(dateventures.Keys);
+        availableRolls = dateKeys;
         recentRolls = new List<string>();
     }
 
@@ -60,9 +60,9 @@ public class Data : MonoBehaviour
     }
 
     // Getter for keys
-    public List<string> Keys
+    public List<string> DateKeys
     {
-        get { return keys; }
+        get { return dateKeys; }
     }
 
     // Getter for dateventuresLength

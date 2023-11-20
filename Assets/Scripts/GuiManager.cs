@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class GUI : MonoBehaviour
+public class GuiManager : MonoBehaviour
 {
     [SerializeField] Button rollButton, goButton;
     [SerializeField] RawImage dateCard;
