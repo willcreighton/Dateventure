@@ -6,7 +6,7 @@ using TMPro;
 
 public class GuiManager : MonoBehaviour
 {
-    [SerializeField] Button rollButton, goButton;
+    [SerializeField] Button rollButton, showButton, goButton;
     [SerializeField] RawImage dateCard;
     [SerializeField] TextMeshProUGUI dateIdea, dateDetails;
 
@@ -16,11 +16,19 @@ public class GuiManager : MonoBehaviour
             { "defaultCardPosition", new Vector2(0, -500) },
             { "showCardPosition", new Vector2(0, 0) },
 
-            // RollButton and GoButton
+            // RollButton, ShowButton, and GoButton
             { "defaultRollButtonPosition", new Vector2(0, 0) },
             { "revealedRollButtonPosition", new Vector2(-480, 0) },
-            { "defaultGoButtonPosition", new Vector2(0, -90) },
-            { "revealedGoButtonPosition", new Vector2(-480, -90) },
+            { "showButtonPosition", new Vector2(0, -90) },
+            { "goButtonPosition", new Vector2(-480, -90) },
+        };
+
+    Dictionary<string, Vector2> guiElementSizeData = new Dictionary<string, Vector2>
+        {
+            // RollButton
+            { "defaultRollButtonSize", new Vector2(1, 1) },
+            { "enteredRollButtonSize", new Vector2(1.1f, 1.1f) },
+            { "activatedRollButtonSize", new Vector2(0.9f, 0.9f) },
         };
 
     // Start is called before the first frame update
@@ -34,6 +42,13 @@ public class GuiManager : MonoBehaviour
     {  
         get { return rollButton; } 
         set { rollButton = value; }
+    }
+
+    // Getter and setter for showButton
+    public Button ShowButton
+    {
+        get { return showButton; }
+        set { showButton = value; }
     }
 
     // Getter and setter for goButton
@@ -64,8 +79,13 @@ public class GuiManager : MonoBehaviour
         set { dateDetails = value; }
     }
 
-    public Dictionary<string, Vector2> GuiElementPositionsData
+    public Dictionary<string, Vector2> GuiElementPositionData
     {
         get { return guiElementPositionData; }
+    }
+
+    public Dictionary<string, Vector2> GuiElementSizeData
+    {
+        get { return guiElementSizeData; }
     }
 }
