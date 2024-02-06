@@ -29,7 +29,8 @@ public class Main : MonoBehaviour
         guiManagerScript = GetComponent<GuiManager>();
         saveSystemScript = GetComponent<SaveSystem>();
 
-        saveSystemScript.LoadData();
+        coreDataScript.DateventureCounter = saveSystemScript.LoadData();
+        guiManagerScript.DateventureCounter.text = $"Dateventures: {coreDataScript.DateventureCounter.ToString()}";
 
         guiManagerScript.RollButton.onClick.AddListener(OnRollButtonActivated);
         guiManagerScript.ShowButton.onClick.AddListener(OnShowButtonActivated);
@@ -162,7 +163,6 @@ public class Main : MonoBehaviour
                    .SetEase(Ease.OutSine)
                    .OnComplete(() => guiManagerScript.GoButton.interactable = true);
             }
-
         }
     }
 
@@ -238,9 +238,16 @@ public class Main : MonoBehaviour
             .OnComplete(() => ResetButtonSize(guiManagerScript.GoButton));
 
         coreDataScript.DateventureCounter++;
-        Debug.Log($"You've gone on {coreDataScript.DateventureCounter} dateventures!");
+        guiManagerScript.DateventureCounter.text = $"Dateventures: {coreDataScript.DateventureCounter.ToString()}";
 
         saveSystemScript.SaveData();
+
+        // Reset pos, although may want to do something different
+        guiManagerScript.DateCard.transform.localPosition = guiManagerScript.GuiElementPositionData["defaultCardPosition"];
+        guiManagerScript.RollButton.transform.localPosition = guiManagerScript.GuiElementPositionData["defaultRollButtonPosition"];
+        guiManagerScript.ShowButton.transform.localPosition = guiManagerScript.GuiElementPositionData["showButtonPosition"];
+
+        // TODO: Slide card over to right side of screen. want to preserve until user manually clicks roll again...
     }
 
     string GenerateDateCardKey()

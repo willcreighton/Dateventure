@@ -7,7 +7,6 @@ public class SaveSystem : MonoBehaviour
 
     void Start()
     {
-        // Assuming these scripts are attached to the same GameObject
         coreDataScript = GetComponent<CoreData>();
     }
 
@@ -24,7 +23,6 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
-
     public int LoadData()
     {
         string path = Application.persistentDataPath + "/coreData.txt";
@@ -38,8 +36,7 @@ public class SaveSystem : MonoBehaviour
 
                 if (int.TryParse(data, out int dateventureCounter))
                 {
-                    // Successfully parsed the data, you can assign it to your CoreDataScript
-                    coreDataScript.DateventureCounter = dateventureCounter;
+                    // Successfully parsed the data
                     return dateventureCounter;
                 }
                 else
