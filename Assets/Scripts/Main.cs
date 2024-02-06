@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static UnityEngine.ParticleSystem;
@@ -12,10 +13,13 @@ public class Main : MonoBehaviour
     // Declare the classes we will utilize
     CoreData coreDataScript;
     GuiManager guiManagerScript;
+    SaveSystem saveSystemScript;
 
     Vector3 btnSize;
 
     bool overRollBtn = false;
+    bool overShowBtn = false;
+    bool overGoBtn = false;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +27,9 @@ public class Main : MonoBehaviour
         // Assuming these scripts are attached to the same GameObject
         coreDataScript = GetComponent<CoreData>();
         guiManagerScript = GetComponent<GuiManager>();
+        saveSystemScript = GetComponent<SaveSystem>();
+
+        saveSystemScript.LoadData();
 
         guiManagerScript.RollButton.onClick.AddListener(OnRollButtonActivated);
         guiManagerScript.ShowButton.onClick.AddListener(OnShowButtonActivated);
@@ -31,26 +38,36 @@ public class Main : MonoBehaviour
         btnSize = guiManagerScript.RollButton.transform.localScale * 1.2f;
 
         // Add an EventTrigger component to the RollButton and subscribe to the PointerEnter event
-        // TODO: DO THIS WITH HELPER FUNCS AND MAKE SURE ITS SAFE AND RELIABLE
-        EventTrigger trigger = guiManagerScript.RollButton.gameObject.AddComponent<EventTrigger>();
+        // TODO: DO THIS WITH HELPER FUNCS AND MAKE SURE ITS SAFE AND RELIABLE // IMPROVE READABILITY
+        AddEventTrigger(guiManagerScript.RollButton, EventTriggerType.PointerEnter, (data) => { OnMouseEnterButton(guiManagerScript.RollButton); });
+        AddEventTrigger(guiManagerScript.RollButton, EventTriggerType.PointerExit, (data) => { OnMouseExitButton(guiManagerScript.RollButton); });
 
-        // Add OnPointerEnter
-        EventTrigger.Entry entryEnter = new EventTrigger.Entry();
-        entryEnter.eventID = EventTriggerType.PointerEnter;
-        entryEnter.callback.AddListener((data) => { OnMouseEnterButton(guiManagerScript.RollButton); });
-        trigger.triggers.Add(entryEnter);
+        AddEventTrigger(guiManagerScript.ShowButton, EventTriggerType.PointerEnter, (data) => { OnMouseEnterButton(guiManagerScript.ShowButton); });
+        AddEventTrigger(guiManagerScript.ShowButton, EventTriggerType.PointerExit, (data) => { OnMouseExitButton(guiManagerScript.ShowButton); });
 
-        // Add OnPointerExit
-        EventTrigger.Entry entryExit = new EventTrigger.Entry();
-        entryExit.eventID = EventTriggerType.PointerExit;
-        entryExit.callback.AddListener((data) => { OnMouseExitButton(guiManagerScript.RollButton); });
-        trigger.triggers.Add(entryExit);
+        AddEventTrigger(guiManagerScript.GoButton, EventTriggerType.PointerEnter, (data) => { OnMouseEnterButton(guiManagerScript.GoButton); });
+        AddEventTrigger(guiManagerScript.GoButton, EventTriggerType.PointerExit, (data) => { OnMouseExitButton(guiManagerScript.GoButton); });
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    void AddEventTrigger(Button button, EventTriggerType triggerType, UnityAction<BaseEventData> callback)
+    {
+        EventTrigger trigger = button.gameObject.GetComponent<EventTrigger>();
+
+        if (trigger == null)
+        {
+            trigger = button.gameObject.AddComponent<EventTrigger>();
+        }
+
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = triggerType;
+        entry.callback.AddListener(callback);
+        trigger.triggers.Add(entry);
     }
 
     void OnMouseEnterButton(Button btn)
@@ -64,11 +81,19 @@ public class Main : MonoBehaviour
                 overRollBtn = true;
                 break;
 
+            case var _ when btn == guiManagerScript.ShowButton:
+                overShowBtn = true;
+                break;
+
+            case var _ when btn == guiManagerScript.GoButton:
+                overGoBtn = true;
+                break;
+
             default:
                 break;
         }
 
-        guiManagerScript.RollButton.transform.DOScale(scaleFactor, duration)
+        btn.transform.DOScale(scaleFactor, duration)
             .SetEase(Ease.OutSine);
     }
 
@@ -83,27 +108,61 @@ public class Main : MonoBehaviour
                 overRollBtn = false;
                 break;
 
+            case var _ when btn == guiManagerScript.ShowButton:
+                overShowBtn = false;
+                break;
+
+            case var _ when btn == guiManagerScript.GoButton:
+                overGoBtn = false;
+                break;
+
             default:
                 break;
         }
 
-        guiManagerScript.RollButton.transform.DOScale(scaleFactor, duration)
+        btn.transform.DOScale(scaleFactor, duration)
             .SetEase(Ease.OutSine);
     }
 
-    void ResetButtonSize()
+    void ResetButtonSize(Button btn)
     {
-        if (overRollBtn)
+
+        if (btn == guiManagerScript.RollButton)
         {
-            guiManagerScript.RollButton.transform.DOScale(guiManagerScript.GuiElementSizeData["enteredRollButtonSize"], 0.2f)
-               .SetEase(Ease.OutSine)
-               .OnComplete(() => guiManagerScript.RollButton.interactable = true);
+            if (overRollBtn)
+            {
+                guiManagerScript.RollButton.transform.DOScale(guiManagerScript.GuiElementSizeData["enteredRollButtonSize"], 0.2f)
+                   .SetEase(Ease.OutSine)
+                   .OnComplete(() => guiManagerScript.RollButton.interactable = true);
+            }
+            else
+            {
+                guiManagerScript.RollButton.transform.DOScale(guiManagerScript.GuiElementSizeData["defaultRollButtonSize"], 0.2f)
+                   .SetEase(Ease.OutSine)
+                   .OnComplete(() => guiManagerScript.RollButton.interactable = true);
+            }
         }
-        else
+        else if (btn == guiManagerScript.ShowButton)
         {
-            guiManagerScript.RollButton.transform.DOScale(guiManagerScript.GuiElementSizeData["defaultRollButtonSize"], 0.2f)
-               .SetEase(Ease.OutSine)
-               .OnComplete(() => guiManagerScript.RollButton.interactable = true); ;
+            guiManagerScript.ShowButton.transform.DOScale(guiManagerScript.GuiElementSizeData["defaultRollButtonSize"], 0.2f)
+                   .SetEase(Ease.OutSine)
+                   .OnComplete(() => guiManagerScript.ShowButton.interactable = true);
+        }
+        else if (btn == guiManagerScript.GoButton)
+        {
+            if (overGoBtn)
+            {
+                guiManagerScript.GoButton.transform.DOScale(guiManagerScript.GuiElementSizeData["enteredRollButtonSize"], 0.2f)
+                   .SetEase(Ease.OutSine)
+                   .OnComplete(() => guiManagerScript.GoButton.interactable = true);
+            }
+            else
+            {
+                guiManagerScript.GoButton.transform.DOScale(guiManagerScript.GuiElementSizeData["defaultRollButtonSize"], 0.2f)
+                   .SetEase(Ease.OutSine)
+                   .OnComplete(() => guiManagerScript.GoButton.interactable = true);
+            }
+
         }
     }
 
@@ -118,7 +177,7 @@ public class Main : MonoBehaviour
 
         guiManagerScript.RollButton.transform.DOScale(guiManagerScript.GuiElementSizeData["activatedRollButtonSize"], 0.1f)
             .SetEase(Ease.OutBack)
-            .OnComplete(() => ResetButtonSize());
+            .OnComplete(() => ResetButtonSize(guiManagerScript.RollButton));
         // TODO: dont allow clicking again until tween completes
 
         string key = GenerateDateCardKey();
@@ -147,6 +206,12 @@ public class Main : MonoBehaviour
 
     void OnShowButtonActivated()
     {
+        guiManagerScript.ShowButton.interactable = false;
+
+        guiManagerScript.ShowButton.transform.DOScale(guiManagerScript.GuiElementSizeData["activatedRollButtonSize"], 0.1f)
+            .SetEase(Ease.OutBack)
+            .OnComplete(() => ResetButtonSize(guiManagerScript.ShowButton));
+
         if (guiManagerScript.ShowButton.IsActive())
         {
             guiManagerScript.ShowButton.gameObject.SetActive(false);
@@ -166,7 +231,16 @@ public class Main : MonoBehaviour
 
     void OnGoButtonActivated()
     {
+        guiManagerScript.GoButton.interactable = false;
 
+        guiManagerScript.GoButton.transform.DOScale(guiManagerScript.GuiElementSizeData["activatedRollButtonSize"], 0.1f)
+            .SetEase(Ease.OutBack)
+            .OnComplete(() => ResetButtonSize(guiManagerScript.GoButton));
+
+        coreDataScript.DateventureCounter++;
+        Debug.Log($"You've gone on {coreDataScript.DateventureCounter} dateventures!");
+
+        saveSystemScript.SaveData();
     }
 
     string GenerateDateCardKey()

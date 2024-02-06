@@ -33,7 +33,6 @@ public class CoreData : MonoBehaviour
     void Start()
     {
         dateventuresLength = dateventures.Count;
-        //dateventureCounter = 0; // TODO: Dynamically store the correct amount of dateventures completed
         dateKeys = new List<string>(dateventures.Keys);
         availableRolls = dateKeys;
         recentRolls = new List<string>();
@@ -69,6 +68,13 @@ public class CoreData : MonoBehaviour
     public int DateventuresLength
     {
         get { return dateventuresLength; }
+    }
+
+    // Getter for dateventureCounter
+    public int DateventureCounter
+    {
+        get { return dateventureCounter; }
+        set { dateventureCounter = value; }
     }
 
     public int RollsThreshold

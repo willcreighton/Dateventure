@@ -15,7 +15,7 @@ public class GuiManager : MonoBehaviour
             // DateCard
             { "defaultCardPosition", new Vector2(0, -500) },
             { "showCardPosition", new Vector2(0, 0) },
-
+            
             // RollButton, ShowButton, and GoButton
             { "defaultRollButtonPosition", new Vector2(0, 0) },
             { "revealedRollButtonPosition", new Vector2(-480, 0) },
