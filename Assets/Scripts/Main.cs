@@ -14,12 +14,15 @@ public class Main : MonoBehaviour
     CoreData coreDataScript;
     GuiManager guiManagerScript;
     SaveSystem saveSystemScript;
+    SoundPlayer soundPlayerScript;
 
     Vector3 btnSize;
 
     bool overRollBtn = false;
     bool overShowBtn = false;
     bool overGoBtn = false;
+
+    bool activatedAnimPlaying = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +31,7 @@ public class Main : MonoBehaviour
         coreDataScript = GetComponent<CoreData>();
         guiManagerScript = GetComponent<GuiManager>();
         saveSystemScript = GetComponent<SaveSystem>();
+        soundPlayerScript = GetComponent<SoundPlayer>();
 
         coreDataScript.DateventureCounter = saveSystemScript.LoadData();
         guiManagerScript.DateventureCounter.text = $"Dateventures: {coreDataScript.DateventureCounter.ToString()}";
@@ -35,6 +39,7 @@ public class Main : MonoBehaviour
         guiManagerScript.RollButton.onClick.AddListener(OnRollButtonActivated);
         guiManagerScript.ShowButton.onClick.AddListener(OnShowButtonActivated);
         guiManagerScript.GoButton.onClick.AddListener(OnGoButtonActivated);
+        guiManagerScript.ReturnButton.onClick.AddListener(OnReturnButtonActivated);
 
         btnSize = guiManagerScript.RollButton.transform.localScale * 1.2f;
 
@@ -48,6 +53,9 @@ public class Main : MonoBehaviour
 
         AddEventTrigger(guiManagerScript.GoButton, EventTriggerType.PointerEnter, (data) => { OnMouseEnterButton(guiManagerScript.GoButton); });
         AddEventTrigger(guiManagerScript.GoButton, EventTriggerType.PointerExit, (data) => { OnMouseExitButton(guiManagerScript.GoButton); });
+
+        AddEventTrigger(guiManagerScript.ReturnButton, EventTriggerType.PointerEnter, (data) => { OnMouseEnterButton(guiManagerScript.ReturnButton); });
+        AddEventTrigger(guiManagerScript.ReturnButton, EventTriggerType.PointerExit, (data) => { OnMouseExitButton(guiManagerScript.ReturnButton); });
     }
 
     // Update is called once per frame
@@ -90,12 +98,21 @@ public class Main : MonoBehaviour
                 overGoBtn = true;
                 break;
 
+            case var _ when btn == guiManagerScript.ReturnButton:
+                if (!btn.interactable)
+                {
+                    return;
+                }
+                break;
+
             default:
                 break;
         }
 
         btn.transform.DOScale(scaleFactor, duration)
             .SetEase(Ease.OutSine);
+
+        soundPlayerScript.PlayHoverSound();
     }
 
     void OnMouseExitButton(Button btn)
@@ -117,16 +134,28 @@ public class Main : MonoBehaviour
                 overGoBtn = false;
                 break;
 
+            case var _ when btn == guiManagerScript.ReturnButton:
+                if (!btn.interactable)
+                {
+                    return;
+                }
+                break;
+
             default:
                 break;
         }
 
-        btn.transform.DOScale(scaleFactor, duration)
-            .SetEase(Ease.OutSine);
+        if (!activatedAnimPlaying)
+        {
+            btn.transform.DOScale(scaleFactor, duration)
+                .SetEase(Ease.OutSine);
+        }
+
     }
 
     void ResetButtonSize(Button btn)
     {
+        activatedAnimPlaying = false;
 
         if (btn == guiManagerScript.RollButton)
         {
@@ -151,33 +180,83 @@ public class Main : MonoBehaviour
         }
         else if (btn == guiManagerScript.GoButton)
         {
-            if (overGoBtn)
+            guiManagerScript.GoButton.interactable = true;
+
+            if (guiManagerScript.RollButton.IsActive())
             {
-                guiManagerScript.GoButton.transform.DOScale(guiManagerScript.GuiElementSizeData["enteredRollButtonSize"], 0.2f)
-                   .SetEase(Ease.OutSine)
-                   .OnComplete(() => guiManagerScript.GoButton.interactable = true);
+                guiManagerScript.RollButton.gameObject.SetActive(false);
             }
-            else
+            if (guiManagerScript.GoButton.IsActive())
             {
-                guiManagerScript.GoButton.transform.DOScale(guiManagerScript.GuiElementSizeData["defaultRollButtonSize"], 0.2f)
-                   .SetEase(Ease.OutSine)
-                   .OnComplete(() => guiManagerScript.GoButton.interactable = true);
+                guiManagerScript.GoButton.gameObject.SetActive(false);
             }
+
+            if (!guiManagerScript.ReturnButton.IsActive())
+            {
+                guiManagerScript.ReturnButton.gameObject.SetActive(true);
+                RevealBtn(guiManagerScript.ReturnButton);
+            }
+        }
+        else if (btn == guiManagerScript.ReturnButton)
+        {
+            guiManagerScript.ReturnButton.interactable = true;
+
+            if (guiManagerScript.ReturnButton.IsActive())
+            {
+                guiManagerScript.ReturnButton.gameObject.SetActive(false);
+            }
+
+            guiManagerScript.ReturnButton.transform.localScale = Vector2.one;
         }
     }
 
-    void RevealShowButton()
+    void SlightlyRevealDateCard()
     {
+        // TODO: Remove magic nums
+        guiManagerScript.DateCard.transform.DOLocalMoveY(-500, 0.2f)
+            .SetEase(Ease.InOutSine);
+        soundPlayerScript.PlaySlightRevealSound();
+    }
 
+    void FullyRevealDateCard()
+    {
+        // TODO: Remove magic nums
+        guiManagerScript.DateCard.transform.DOLocalMoveY(-30, 0.3f)
+            .SetEase(Ease.InBack);
+    }
+
+    void ShiftContainerPos()
+    {
+        guiManagerScript.RollShowGoContainer.transform.DOLocalMoveY(0, 0.2f)
+            .SetEase(Ease.InOutSine);
+    }
+
+    void RevealBtn(Button btn)
+    {
+        btn.transform.localScale = Vector2.zero;
+
+        btn.transform.DOScale(Vector2.one, 0.2f)
+            .SetEase(Ease.OutBack);
     }
 
     void OnRollButtonActivated()
     {
         guiManagerScript.RollButton.interactable = false;
 
+        activatedAnimPlaying = true;
         guiManagerScript.RollButton.transform.DOScale(guiManagerScript.GuiElementSizeData["activatedRollButtonSize"], 0.1f)
             .SetEase(Ease.OutBack)
             .OnComplete(() => ResetButtonSize(guiManagerScript.RollButton));
+        soundPlayerScript.PlayClickSound();
+
+        if (guiManagerScript.RollShowGoContainer.transform.localPosition != Vector3.zero)
+        {
+            guiManagerScript.RollShowGoContainer.transform.DOLocalMoveX(0, 0.2f)
+              .SetEase(Ease.InBack);
+        }
+
+        ResetButtonSize(guiManagerScript.ReturnButton);
+
         // TODO: dont allow clicking again until tween completes
 
         string key = GenerateDateCardKey();
@@ -187,7 +266,15 @@ public class Main : MonoBehaviour
         // Now that a date card exists, enable the ShowButton & DateCard, hide GoButton if needed
         if (!guiManagerScript.ShowButton.IsActive())
         {
-            guiManagerScript.ShowButton.gameObject.SetActive(true);
+            if (guiManagerScript.RollShowGoContainer.transform.localPosition.x != -480)
+            {
+                guiManagerScript.ShowButton.gameObject.SetActive(true);
+                RevealBtn(guiManagerScript.ShowButton);
+            }
+            else
+            {
+                guiManagerScript.ShowButton.gameObject.SetActive(true);
+            }
         }
         if (!guiManagerScript.DateCard.IsActive())
         {
@@ -199,9 +286,13 @@ public class Main : MonoBehaviour
         }
 
         // TODO: Reset positions only if needed
-        guiManagerScript.DateCard.transform.localPosition = guiManagerScript.GuiElementPositionData["defaultCardPosition"];
-        guiManagerScript.RollButton.transform.localPosition = guiManagerScript.GuiElementPositionData["defaultRollButtonPosition"];
-        guiManagerScript.ShowButton.transform.localPosition = guiManagerScript.GuiElementPositionData["showButtonPosition"];
+
+        if (guiManagerScript.DateCard.transform.localPosition.y != -500)
+        {
+            SlightlyRevealDateCard();
+        }
+
+        ShiftContainerPos();
     }
 
     void OnShowButtonActivated()
@@ -211,6 +302,7 @@ public class Main : MonoBehaviour
         guiManagerScript.ShowButton.transform.DOScale(guiManagerScript.GuiElementSizeData["activatedRollButtonSize"], 0.1f)
             .SetEase(Ease.OutBack)
             .OnComplete(() => ResetButtonSize(guiManagerScript.ShowButton));
+        soundPlayerScript.PlayClickSound();
 
         if (guiManagerScript.ShowButton.IsActive())
         {
@@ -221,33 +313,49 @@ public class Main : MonoBehaviour
             guiManagerScript.GoButton.gameObject.SetActive(true);
         }
 
-        //guiManagerScript.DateCard.transform.localPosition = guiManagerScript.GuiElementPositionData["showCardPosition"];
-        guiManagerScript.RollButton.transform.localPosition = guiManagerScript.GuiElementPositionData["revealedRollButtonPosition"];
-        guiManagerScript.GoButton.transform.localPosition = guiManagerScript.GuiElementPositionData["goButtonPosition"];
+        guiManagerScript.RollShowGoContainer.transform.DOLocalMoveX(-480, 0.2f)
+               .SetEase(Ease.InBack);
 
-        guiManagerScript.DateCard.transform.DOMove(guiManagerScript.GuiElementPositionData["showCardPosition"], 0.4f)
-            .SetEase(Ease.InOutSine);
+        FullyRevealDateCard();
+        soundPlayerScript.PlayFullRevealSound();
     }
 
     void OnGoButtonActivated()
     {
         guiManagerScript.GoButton.interactable = false;
 
-        guiManagerScript.GoButton.transform.DOScale(guiManagerScript.GuiElementSizeData["activatedRollButtonSize"], 0.1f)
-            .SetEase(Ease.OutBack)
+        guiManagerScript.RollShowGoContainer.transform.DOScale(Vector2.zero, 0.2f)
+            .SetEase(Ease.InBack)
             .OnComplete(() => ResetButtonSize(guiManagerScript.GoButton));
+        soundPlayerScript.PlayClickSound();
 
         coreDataScript.DateventureCounter++;
         guiManagerScript.DateventureCounter.text = $"Dateventures: {coreDataScript.DateventureCounter.ToString()}";
 
         saveSystemScript.SaveData();
+    }
 
-        // Reset pos, although may want to do something different
-        guiManagerScript.DateCard.transform.localPosition = guiManagerScript.GuiElementPositionData["defaultCardPosition"];
-        guiManagerScript.RollButton.transform.localPosition = guiManagerScript.GuiElementPositionData["defaultRollButtonPosition"];
-        guiManagerScript.ShowButton.transform.localPosition = guiManagerScript.GuiElementPositionData["showButtonPosition"];
+    void OnReturnButtonActivated()
+    {
+        guiManagerScript.ReturnButton.interactable = false;
 
-        // TODO: Slide card over to right side of screen. want to preserve until user manually clicks roll again...
+        Vector2 btnSize = Vector2.zero;
+
+        guiManagerScript.ReturnButton.transform.DOScale(btnSize, 0.1f)
+            .SetEase(Ease.InSine);
+        soundPlayerScript.PlayClickSound();
+
+        if (!guiManagerScript.RollButton.IsActive())
+        {
+            guiManagerScript.RollButton.gameObject.SetActive(true);
+        }
+
+        guiManagerScript.RollShowGoContainer.transform.DOScale(Vector2.one, 0.2f)
+            .SetEase(Ease.OutBack);
+
+        // TODO: Reset screen back to starting screen with a function
+        guiManagerScript.DateCard.transform.localPosition = guiManagerScript.GuiElementPositionData["hiddenCardPos"];
+        guiManagerScript.RollShowGoContainer.transform.localPosition = guiManagerScript.GuiElementPositionData["defaultRollShowGoPos"];
     }
 
     string GenerateDateCardKey()
