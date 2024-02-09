@@ -1,12 +1,10 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEngine.ParticleSystem;
+using TMPro;
+using System.Diagnostics.Tracing;
 
 public class Main : MonoBehaviour
 {
@@ -23,6 +21,9 @@ public class Main : MonoBehaviour
     bool overGoBtn = false;
 
     bool activatedAnimPlaying = false;
+
+    [SerializeField]
+    private GameObject heartPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -210,6 +211,33 @@ public class Main : MonoBehaviour
         }
     }
 
+    void IncrementDateventureCounter()
+    {
+        float expandSize = 1.2f;
+        float animationDuration = 0.2f;
+
+        // Initial values
+        Vector3 originalScale = guiManagerScript.DateventureCounter.rectTransform.localScale;
+        Color originalColor = guiManagerScript.DateventureCounter.color;
+        Color myColor = ColorUtility.TryParseHtmlString("#EF2D56", out Color color) ? color : Color.white;
+
+        // Sequence for the animation
+        Sequence sequence = DOTween.Sequence();
+
+        // Expand the text
+        sequence.Append(guiManagerScript.DateventureCounter.DOColor(myColor, animationDuration))
+                .Append(guiManagerScript.DateventureCounter.DOColor(originalColor, animationDuration))
+                .Play();
+
+        guiManagerScript.DateventureCounter.transform.DOScale(Vector2.one * expandSize, animationDuration)
+            .SetEase(Ease.OutBack)
+            .OnComplete(() =>
+            {
+                guiManagerScript.DateventureCounter.transform.DOScale(Vector2.one, animationDuration)
+                    .SetEase(Ease.OutSine);
+            });
+    }
+
     void HideDateCard()
     {
         guiManagerScript.DateCard.transform.DOLocalMoveY(-670, 0.3f)
@@ -352,6 +380,31 @@ public class Main : MonoBehaviour
         FullyRevealDateCard();
     }
 
+    void ApplyHeartsEffect()
+    {
+        // Randomly determine the number of prefabs to instantiate
+        int numberOfPrefabs = Random.Range(10, 20 + 1);
+
+        // Instantiate random prefabs with random positions within the bounds
+        for (int i = 0; i < numberOfPrefabs; i++)
+        {
+            float randomX = Random.Range(-800, 800);
+            float randomY = Random.Range(-400, -600);
+
+            Vector2 randomPosition = new Vector2(randomX, randomY);
+
+            // Instantiate prefab at the random local position
+            GameObject heartInstance = Instantiate(heartPrefab, Vector2.zero, Quaternion.identity);
+
+            heartInstance.transform.parent = transform;
+
+            // Set the local position based on the random position
+            heartInstance.transform.localPosition = randomPosition;
+
+            heartInstance.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        }
+    }
+
     void OnGoButtonActivated()
     {
         guiManagerScript.GoButton.interactable = false;
@@ -363,6 +416,11 @@ public class Main : MonoBehaviour
 
         coreDataScript.DateventureCounter++;
         guiManagerScript.DateventureCounter.text = $"Dateventures: {coreDataScript.DateventureCounter.ToString()}";
+
+        soundPlayerScript.PlayCounterSound();
+
+        IncrementDateventureCounter();
+        ApplyHeartsEffect();
 
         // Animate counter change here... ideas: maybe make a back easing growth, animated heart pop up... ?
 

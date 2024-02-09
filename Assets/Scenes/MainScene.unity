@@ -2053,6 +2053,41 @@ RectTransform:
   m_AnchoredPosition: {x: -480, y: 0}
   m_SizeDelta: {x: 320, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1495833801
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1495833802}
+  m_Layer: 5
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1495833802
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495833801}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1770214710}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 742, y: -402}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1555842546
 GameObject:
   m_ObjectHideFlags: 0
@@ -2761,6 +2796,7 @@ RectTransform:
   - {fileID: 1749586764}
   - {fileID: 1493807903}
   - {fileID: 1270742038}
+  - {fileID: 1495833802}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2780,6 +2816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4231acab2ff59f4b8cc48269430b9d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heartPrefab: {fileID: 6133010379620045475, guid: af633e4812e3fe64eac024c1d1055fec, type: 3}
 --- !u!114 &1770214712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2843,6 +2880,7 @@ MonoBehaviour:
   clickSound: {fileID: 8300000, guid: cc7e257ba3fbd3c42ae06a3c5ff3e9a4, type: 3}
   slightRevealSound: {fileID: 8300000, guid: 953bd0807c5a72b4ead2a1a460454443, type: 3}
   fullRevealSound: {fileID: 8300000, guid: 8cfdda35e7fdded498bc10359e12d58a, type: 3}
+  counterSound: {fileID: 8300000, guid: 2e9dd74684eb0b548bcc7925c6863b27, type: 3}
 --- !u!1 &1799912016
 GameObject:
   m_ObjectHideFlags: 0

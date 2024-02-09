@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class SoundPlayer : MonoBehaviour
 {
-    [SerializeField] AudioClip hoverSound, clickSound, slightRevealSound, fullRevealSound;
-    private AudioSource hoverAudioSource, clickAudioSource, slightRevealAudioSource, fullRevealAudioSource;
+    [SerializeField] AudioClip hoverSound, clickSound, slightRevealSound, fullRevealSound, counterSound;
+    private AudioSource hoverAudioSource, clickAudioSource, slightRevealAudioSource, fullRevealAudioSource, counterAudioSource;
 
     float mouseVolume = 0.4f;
     float cardVolume = 0.7f;
+    float counterVolume = 0.8f;
 
     void Start()
     {
@@ -15,6 +16,7 @@ public class SoundPlayer : MonoBehaviour
         clickAudioSource = AddAudioSource(clickSound, mouseVolume);
         slightRevealAudioSource = AddAudioSource(slightRevealSound, cardVolume);
         fullRevealAudioSource = AddAudioSource(fullRevealSound, cardVolume);
+        counterAudioSource = AddAudioSource(counterSound, counterVolume);
     }
 
     public void PlayHoverSound()
@@ -35,6 +37,11 @@ public class SoundPlayer : MonoBehaviour
     public void PlayFullRevealSound()
     {
         PlaySound(fullRevealAudioSource, fullRevealSound);
+    }
+
+    public void PlayCounterSound()
+    {
+        PlaySound(counterAudioSource, counterSound);
     }
 
     private AudioSource AddAudioSource(AudioClip clip, float volume)
