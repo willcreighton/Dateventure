@@ -210,11 +210,22 @@ public class Main : MonoBehaviour
         }
     }
 
+    void HideDateCard()
+    {
+        guiManagerScript.DateCard.transform.DOLocalMoveY(-670, 0.3f)
+            .SetEase(Ease.InBack)
+            .OnComplete(() => 
+            {
+                guiManagerScript.RollShowGoContainer.transform.DOScale(Vector2.one, 0.2f)
+                    .SetEase(Ease.OutBack);
+            });
+    }
+
     void SlightlyRevealDateCard()
     {
         // TODO: Remove magic nums
         guiManagerScript.DateCard.transform.DOLocalMoveY(-500, 0.2f)
-            .SetEase(Ease.InOutSine);
+            .SetEase(Ease.InSine);
         soundPlayerScript.PlaySlightRevealSound();
     }
 
@@ -223,6 +234,7 @@ public class Main : MonoBehaviour
         // TODO: Remove magic nums
         guiManagerScript.DateCard.transform.DOLocalMoveY(-30, 0.3f)
             .SetEase(Ease.InBack);
+        soundPlayerScript.PlayFullRevealSound();
     }
 
     void ShiftContainerPos()
@@ -249,10 +261,23 @@ public class Main : MonoBehaviour
             .OnComplete(() => ResetButtonSize(guiManagerScript.RollButton));
         soundPlayerScript.PlayClickSound();
 
-        if (guiManagerScript.RollShowGoContainer.transform.localPosition != Vector3.zero)
+        if (guiManagerScript.RollShowGoContainer.transform.localPosition.x == -480)
         {
             guiManagerScript.RollShowGoContainer.transform.DOLocalMoveX(0, 0.2f)
               .SetEase(Ease.InBack);
+
+            guiManagerScript.GoText.rectTransform.DOLocalMoveY(-60, 0.1f)
+            .SetEase(Ease.InSine)
+            .OnComplete(() =>
+            {
+                guiManagerScript.GoButton.gameObject.SetActive(false);
+                guiManagerScript.GoText.rectTransform.anchoredPosition = new Vector2(0, 0);
+
+                guiManagerScript.ShowButton.gameObject.SetActive(true);
+                guiManagerScript.ShowText.rectTransform.anchoredPosition = new Vector2(0, 60);
+                guiManagerScript.ShowText.rectTransform.DOLocalMoveY(0, 0.1f)
+                    .SetEase(Ease.InSine);
+            });
         }
 
         ResetButtonSize(guiManagerScript.ReturnButton);
@@ -271,10 +296,6 @@ public class Main : MonoBehaviour
                 guiManagerScript.ShowButton.gameObject.SetActive(true);
                 RevealBtn(guiManagerScript.ShowButton);
             }
-            else
-            {
-                guiManagerScript.ShowButton.gameObject.SetActive(true);
-            }
         }
         if (!guiManagerScript.DateCard.IsActive())
         {
@@ -282,7 +303,7 @@ public class Main : MonoBehaviour
         }
         if (guiManagerScript.GoButton.IsActive())
         {
-            guiManagerScript.GoButton.gameObject.SetActive(false);
+            //guiManagerScript.GoButton.gameObject.SetActive(false);
         }
 
         // TODO: Reset positions only if needed
@@ -306,18 +327,29 @@ public class Main : MonoBehaviour
 
         if (guiManagerScript.ShowButton.IsActive())
         {
-            guiManagerScript.ShowButton.gameObject.SetActive(false);
+            //guiManagerScript.ShowButton.gameObject.SetActive(false);
         }
         if (!guiManagerScript.GoButton.IsActive())
         {
-            guiManagerScript.GoButton.gameObject.SetActive(true);
+            //guiManagerScript.GoButton.gameObject.SetActive(true);
         }
 
+        guiManagerScript.ShowText.rectTransform.DOLocalMoveY(-60, 0.1f)
+            .SetEase(Ease.InSine)
+            .OnComplete(() =>
+            {
+                guiManagerScript.ShowButton.gameObject.SetActive(false);
+                guiManagerScript.ShowText.rectTransform.anchoredPosition = new Vector2(0, 0);
+
+                guiManagerScript.GoButton.gameObject.SetActive(true);
+                guiManagerScript.GoText.rectTransform.anchoredPosition = new Vector2(0, 60);
+                guiManagerScript.GoText.rectTransform.DOLocalMoveY(0, 0.1f)
+                    .SetEase(Ease.InSine);
+            });
         guiManagerScript.RollShowGoContainer.transform.DOLocalMoveX(-480, 0.2f)
-               .SetEase(Ease.InBack);
+            .SetEase(Ease.InBack);
 
         FullyRevealDateCard();
-        soundPlayerScript.PlayFullRevealSound();
     }
 
     void OnGoButtonActivated()
@@ -331,6 +363,8 @@ public class Main : MonoBehaviour
 
         coreDataScript.DateventureCounter++;
         guiManagerScript.DateventureCounter.text = $"Dateventures: {coreDataScript.DateventureCounter.ToString()}";
+
+        // Animate counter change here... ideas: maybe make a back easing growth, animated heart pop up... ?
 
         saveSystemScript.SaveData();
     }
@@ -350,11 +384,8 @@ public class Main : MonoBehaviour
             guiManagerScript.RollButton.gameObject.SetActive(true);
         }
 
-        guiManagerScript.RollShowGoContainer.transform.DOScale(Vector2.one, 0.2f)
-            .SetEase(Ease.OutBack);
-
         // TODO: Reset screen back to starting screen with a function
-        guiManagerScript.DateCard.transform.localPosition = guiManagerScript.GuiElementPositionData["hiddenCardPos"];
+        HideDateCard();
         guiManagerScript.RollShowGoContainer.transform.localPosition = guiManagerScript.GuiElementPositionData["defaultRollShowGoPos"];
     }
 

@@ -8,7 +8,7 @@ public class GuiManager : MonoBehaviour
 {
     [SerializeField] Button rollButton, showButton, goButton, returnButton;
     [SerializeField] RawImage dateCard;
-    [SerializeField] TextMeshProUGUI dateIdea, dateDetails, dateventureCounter;
+    [SerializeField] TextMeshProUGUI dateIdea, dateDetails, dateventureCounter, showText, goText;
     [SerializeField] GameObject rollShowGoContainer;
 
     Dictionary<string, Vector2> guiElementPositionData = new Dictionary<string, Vector2>
@@ -107,6 +107,20 @@ public class GuiManager : MonoBehaviour
     {
         get { return dateventureCounter; }
         set { dateventureCounter = value; }
+    }
+
+    // Getter and setter for showText
+    public TextMeshProUGUI ShowText
+    {
+        get { return showText; }
+        set { showText = value; }
+    }
+
+    // Getter and setter for goText
+    public TextMeshProUGUI GoText
+    {
+        get { return goText; }
+        set { goText = value; }
     }
 
     public Dictionary<string, Vector2> GuiElementPositionData

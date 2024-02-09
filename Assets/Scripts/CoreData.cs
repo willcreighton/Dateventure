@@ -7,10 +7,10 @@ public class CoreData : MonoBehaviour
     // This is a dictionary, dateventures. It holds keys : Date Idea Header, and values : Date Idea Descriptions  
     Dictionary<string, string> dateventures = new Dictionary<string, string>
     {
-        { "Pillow Fort!", "Who doesn't love a good pillow fort? It's time to make one, and we're talking everything. Pillows, blankets, cozy lighting, laptop movies, and popcorn!" },
-        { "Date idea 1.", "Date idea 1 details..." },
-        { "Date idea 2.", "Date idea 2 details..." },
-        { "Date idea 3.", "Date idea 3 details..." }
+        { "Pillow Fort", "Who doesn't love a good pillow fort? It's time to make one, and we're talking everything. Pillows, blankets, cozy lighting, laptop movies, and popcorn!" },
+        { "Date Idea 1", "Date idea 1 details..." },
+        { "Date Idea 2", "Date idea 2 details..." },
+        { "Date Idea 3", "Date idea 3 details..." }
     };
 
     // dateventuresLength : Amount of dateventures in the dateventures dictionary
