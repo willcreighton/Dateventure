@@ -25,9 +25,17 @@ public class Main : MonoBehaviour
     [SerializeField]
     private GameObject heartPrefab;
 
+    RectTransform canvasRectTransform;
+
+    float yPosScalar;
+
     // Start is called before the first frame update
     void Start()
     {
+        canvasRectTransform = GetComponent<RectTransform>();
+
+        yPosScalar = (canvasRectTransform.rect.height / 2);
+
         // Assuming these scripts are attached to the same GameObject
         coreDataScript = GetComponent<CoreData>();
         guiManagerScript = GetComponent<GuiManager>();
@@ -62,7 +70,7 @@ public class Main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Exit();
     }
 
     void AddEventTrigger(Button button, EventTriggerType triggerType, UnityAction<BaseEventData> callback)
@@ -240,7 +248,7 @@ public class Main : MonoBehaviour
 
     void HideDateCard()
     {
-        guiManagerScript.DateCard.transform.DOLocalMoveY(-670, 0.3f)
+        guiManagerScript.DateCard.transform.DOLocalMoveY(-300 - yPosScalar, 0.3f)
             .SetEase(Ease.InBack)
             .OnComplete(() => 
             {
@@ -252,15 +260,16 @@ public class Main : MonoBehaviour
     void SlightlyRevealDateCard()
     {
         // TODO: Remove magic nums
-        guiManagerScript.DateCard.transform.DOLocalMoveY(-500, 0.2f)
+        guiManagerScript.DateCard.transform.DOLocalMoveY(-180 - yPosScalar, 0.2f)
             .SetEase(Ease.InSine);
         soundPlayerScript.PlaySlightRevealSound();
     }
 
     void FullyRevealDateCard()
     {
+
         // TODO: Remove magic nums
-        guiManagerScript.DateCard.transform.DOLocalMoveY(-30, 0.3f)
+        guiManagerScript.DateCard.transform.DOLocalMoveY(0, 0.3f)
             .SetEase(Ease.InBack);
         soundPlayerScript.PlayFullRevealSound();
     }
@@ -382,14 +391,18 @@ public class Main : MonoBehaviour
 
     void ApplyHeartsEffect()
     {
+        // TODO: Fix hearts on all screen sizes
+
         // Randomly determine the number of prefabs to instantiate
-        int numberOfPrefabs = Random.Range(10, 20 + 1);
+        //int numberOfPrefabs = Random.Range(10, 20 + 1);
+        float xScalar = canvasRectTransform.rect.width / 2;
+        float xMultiplier = xScalar / 5;
 
         // Instantiate random prefabs with random positions within the bounds
-        for (int i = 0; i < numberOfPrefabs; i++)
+        for (int i = 0; i < 10; i++)
         {
-            float randomX = Random.Range(-800, 800);
-            float randomY = Random.Range(-400, -600);
+            float randomX = Random.Range(-xScalar + xMultiplier * i, -xScalar + xMultiplier * (i + 1));
+            float randomY = Random.Range(-400 - yPosScalar, -600 - yPosScalar);
 
             Vector2 randomPosition = new Vector2(randomX, randomY);
 
@@ -445,6 +458,14 @@ public class Main : MonoBehaviour
         // TODO: Reset screen back to starting screen with a function
         HideDateCard();
         guiManagerScript.RollShowGoContainer.transform.localPosition = guiManagerScript.GuiElementPositionData["defaultRollShowGoPos"];
+    }
+
+    void Exit()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     string GenerateDateCardKey()
