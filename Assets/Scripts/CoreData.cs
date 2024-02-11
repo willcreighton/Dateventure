@@ -88,6 +88,27 @@ public class CoreData : MonoBehaviour
         { "Dance Class", "Take a dance class together. Learn new moves, laugh through missteps, and enjoy the rhythm of dancing in each other's arms." },
         { "Love List", "Create a list of your favorite things about each other. Share and discuss each point, deepening your connection through expressions of love and admiration." },
         { "Game Inventors", "Invent a new game and play it. Embrace creativity and laughter as you bring a unique and personalized game to life for a memorable experience." },
+        { "Zoo Day", "Explore a regular zoo. Laugh, learn about animals, and create lively memories in the vibrant atmosphere." },
+        { "Aquarium Visit", "Dive into an aquarium. Marvel at marine wonders, share the magic, and experience an underwater adventure together." },
+        { "Random Thrifting", "Thrift together, then venture out. Embrace unique finds and create a day full of surprises and shared experiences." },
+        { "Graffiti Art", "Express creativity with graffiti. Create art, laugh, and enjoy a colorful date filled with self-expression and shared moments." },
+        { "Show Binge", "Binge-watch a show. Snuggle up, share snacks, and immerse in the captivating world of your favorite series together." },
+        { "Horror Car Night", "Car bed, horror movies, cozy blankets—a thrilling cinematic night under the stars in the back of your car." },
+        { "YouTube Mysteries", "Explore unsolved mysteries on YouTube. Share intrigue, discuss theories, and enjoy a suspenseful night of entertainment." },
+        { "Polaroid Memories", "Capture moments with Polaroid pics. Take snapshots throughout the day, creating a visual diary of shared experiences." },
+        { "New Food Discovery", "Discover a new place for food or drinks. Expand culinary horizons and savor the excitement of trying something new together." },
+        { "Persona Play Day", "Adopt new personas for the day. Have fun with characters, laugh, and experience the day from fresh and playful perspectives." },
+        { "First Date Redux", "Pretend it's your first date again. Meet at a new location, relive the excitement, and create memorable moments together." },
+        { "Rollerblading Fun", "Go rollerblading. Enjoy the thrill of gliding, laughter, and the shared joy of an active and fun-filled date." },
+        { "Ice Skating Bliss", "Glide on ice together. Enjoy the beauty of ice skating, hold hands, and create delightful memories on the rink." },
+        { "Swimming Getaway", "Go swimming at a fun location—beach or secret pond. Dive into the water, enjoy the sun, and create refreshing memories." },
+        { "Skinny Dip Adventure", "Embark on a skinny-dipping dare. Share a daring and intimate experience in a secluded and comfortable setting." },
+        { "Expert Exploration", "Pretend to be experts. Examine something in your expert personas, share knowledge, and enjoy a playful day of exploration." },
+        { "Museum Discovery", "Visit a museum. Immerse in art, history, or science, and share the wonder of discovery together." },
+        { "Go Kart Thrills", "Experience go-karting thrills. Race each other, laugh, and create high-speed memories on the track." },
+        { "Pedicure Pampering", "Get pedicures together. Relax, pamper yourselves, and enjoy a spa-like experience for a day of indulgent bonding." },
+        // 100
+        { "Adopt a Child", "Find and go to an adoption center, then adopt a child in cash. Experience the joys and wonders of parenthood!" }
     };
 
 
@@ -96,7 +117,7 @@ public class CoreData : MonoBehaviour
     int dateventuresLength, dateventureCounter;
 
     // rollsThreshold : Represents the threshold for removing from availableRolls before adding back to it
-    const int rollsThreshold = 10;
+    const int rollsThreshold = 20;
 
     // headerQuips : Pre-spin header quips, i.e. "Hey Name1 and Name2. :winky-emoji:"
     // rollingQuips : Header quips for while rolling, i.e. "What's it gonna be!? :eyes-emoji:"
