@@ -476,6 +476,7 @@ public class Main : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            saveSystemScript.SaveData();
             Application.Quit();
         }
     }
