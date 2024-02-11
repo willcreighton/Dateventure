@@ -11,39 +11,20 @@ public class GuiManager : MonoBehaviour
     [SerializeField] GameObject rollShowGoContainer;
 
     Dictionary<string, Vector2> guiElementPositionData = new Dictionary<string, Vector2>
-        {
-        // TODO: Improve naming conventions
-
-            // DateCard
-            { "hiddenCardPos", new Vector2(0, -670) },
-            { "defaultCardPosition", new Vector2(0, -500) },
-            { "showCardPosition", new Vector2(0, 0) },
-            
-            // RollButton, ShowButton, and GoButton
-            { "defaultRollButtonPosition", new Vector2(0, 40) },
-            { "revealedRollButtonPosition", new Vector2(-480, 40) },
-            { "showButtonPosition", new Vector2(0, -40) },
-            { "goButtonPosition", new Vector2(-480, -40) },
-
-            // RollShowGoContainer
-            { "defaultRollShowGoPos", new Vector2(0, -40) },
-            { "centerRollShowGoPos", new Vector2(0, 0) },
-            { "leftRollShowGoPos", new Vector2(-480, 0) },
+        {  
+            // Positions for the container holding the Roll, Show, and Go buttons
+            { "DefaultContainerPos", new Vector2(0, -40) },
+            { "CenterContainerPos", new Vector2(0, 0) },
+            { "LeftContainerPos", new Vector2(-480, 0) },
         };
 
     Dictionary<string, Vector2> guiElementSizeData = new Dictionary<string, Vector2>
         {
-            // RollButton
-            { "defaultRollButtonSize", new Vector2(1, 1) },
-            { "enteredRollButtonSize", new Vector2(1.1f, 1.1f) },
-            { "activatedRollButtonSize", new Vector2(0.9f, 0.9f) },
+            // Sizes for different button states
+            { "DefaultButtonSize", new Vector2(1, 1) },
+            { "EnteredButtonSize", new Vector2(1.1f, 1.1f) },
+            { "ActivatedButtonSize", new Vector2(0.9f, 0.9f) },
         };
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Getter and setter for rollButton
     public Button RollButton 
@@ -122,11 +103,13 @@ public class GuiManager : MonoBehaviour
         set { goText = value; }
     }
 
+    // Getter for guiElementPositionData
     public Dictionary<string, Vector2> GuiElementPositionData
     {
         get { return guiElementPositionData; }
     }
 
+    // Getter for guiElementSizeData
     public Dictionary<string, Vector2> GuiElementSizeData
     {
         get { return guiElementSizeData; }
