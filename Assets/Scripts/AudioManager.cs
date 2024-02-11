@@ -1,10 +1,12 @@
 using UnityEngine;
 
-public class SoundPlayer : MonoBehaviour
+public class AudioManager : MonoBehaviour
 {
+    // Define the audio components
     [SerializeField] AudioClip hoverSound, clickSound, slightRevealSound, fullRevealSound, counterSound;
     private AudioSource hoverAudioSource, clickAudioSource, slightRevealAudioSource, fullRevealAudioSource, counterAudioSource;
 
+    // Define their respective volumes
     float mouseVolume = 0.4f;
     float cardVolume = 0.7f;
     float counterVolume = 0.8f;

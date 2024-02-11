@@ -3,8 +3,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using TMPro;
-using System.Diagnostics.Tracing;
 
 public class Main : MonoBehaviour
 {
@@ -12,13 +10,11 @@ public class Main : MonoBehaviour
     CoreData coreDataScript;
     GuiManager guiManagerScript;
     SaveSystem saveSystemScript;
-    SoundPlayer soundPlayerScript;
+    AudioManager audioManagerScript;
 
     Vector3 btnSize;
 
     bool overRollBtn = false;
-    bool overShowBtn = false;
-    bool overGoBtn = false;
 
     bool activatedAnimPlaying = false;
 
@@ -40,7 +36,7 @@ public class Main : MonoBehaviour
         coreDataScript = GetComponent<CoreData>();
         guiManagerScript = GetComponent<GuiManager>();
         saveSystemScript = GetComponent<SaveSystem>();
-        soundPlayerScript = GetComponent<SoundPlayer>();
+        audioManagerScript = GetComponent<AudioManager>();
 
         coreDataScript.DateventureCounter = saveSystemScript.LoadData();
         guiManagerScript.DateventureCounter.text = $"Dateventures: {coreDataScript.DateventureCounter.ToString()}";
@@ -99,14 +95,6 @@ public class Main : MonoBehaviour
                 overRollBtn = true;
                 break;
 
-            case var _ when btn == guiManagerScript.ShowButton:
-                overShowBtn = true;
-                break;
-
-            case var _ when btn == guiManagerScript.GoButton:
-                overGoBtn = true;
-                break;
-
             case var _ when btn == guiManagerScript.ReturnButton:
                 if (!btn.interactable)
                 {
@@ -121,7 +109,7 @@ public class Main : MonoBehaviour
         btn.transform.DOScale(scaleFactor, duration)
             .SetEase(Ease.OutSine);
 
-        soundPlayerScript.PlayHoverSound();
+        audioManagerScript.PlayHoverSound();
     }
 
     void OnMouseExitButton(Button btn)
@@ -133,14 +121,6 @@ public class Main : MonoBehaviour
         {
             case var _ when btn == guiManagerScript.RollButton:
                 overRollBtn = false;
-                break;
-
-            case var _ when btn == guiManagerScript.ShowButton:
-                overShowBtn = false;
-                break;
-
-            case var _ when btn == guiManagerScript.GoButton:
-                overGoBtn = false;
                 break;
 
             case var _ when btn == guiManagerScript.ReturnButton:
@@ -262,7 +242,7 @@ public class Main : MonoBehaviour
         // TODO: Remove magic nums
         guiManagerScript.DateCard.transform.DOLocalMoveY(-180 - yPosScalar, 0.2f)
             .SetEase(Ease.InSine);
-        soundPlayerScript.PlaySlightRevealSound();
+        audioManagerScript.PlaySlightRevealSound();
     }
 
     void FullyRevealDateCard()
@@ -271,7 +251,7 @@ public class Main : MonoBehaviour
         // TODO: Remove magic nums
         guiManagerScript.DateCard.transform.DOLocalMoveY(0, 0.3f)
             .SetEase(Ease.InBack);
-        soundPlayerScript.PlayFullRevealSound();
+        audioManagerScript.PlayFullRevealSound();
     }
 
     void ShiftContainerPos()
@@ -296,7 +276,7 @@ public class Main : MonoBehaviour
         guiManagerScript.RollButton.transform.DOScale(guiManagerScript.GuiElementSizeData["activatedRollButtonSize"], 0.1f)
             .SetEase(Ease.OutBack)
             .OnComplete(() => ResetButtonSize(guiManagerScript.RollButton));
-        soundPlayerScript.PlayClickSound();
+        audioManagerScript.PlayClickSound();
 
         if (guiManagerScript.RollShowGoContainer.transform.localPosition.x == -480)
         {
@@ -360,7 +340,7 @@ public class Main : MonoBehaviour
         guiManagerScript.ShowButton.transform.DOScale(guiManagerScript.GuiElementSizeData["activatedRollButtonSize"], 0.1f)
             .SetEase(Ease.OutBack)
             .OnComplete(() => ResetButtonSize(guiManagerScript.ShowButton));
-        soundPlayerScript.PlayClickSound();
+        audioManagerScript.PlayClickSound();
 
         if (guiManagerScript.ShowButton.IsActive())
         {
@@ -425,12 +405,12 @@ public class Main : MonoBehaviour
         guiManagerScript.RollShowGoContainer.transform.DOScale(Vector2.zero, 0.2f)
             .SetEase(Ease.InBack)
             .OnComplete(() => ResetButtonSize(guiManagerScript.GoButton));
-        soundPlayerScript.PlayClickSound();
+        audioManagerScript.PlayClickSound();
 
         coreDataScript.DateventureCounter++;
         guiManagerScript.DateventureCounter.text = $"Dateventures: {coreDataScript.DateventureCounter.ToString()}";
 
-        soundPlayerScript.PlayCounterSound();
+        audioManagerScript.PlayCounterSound();
 
         IncrementDateventureCounter();
         ApplyHeartsEffect();
@@ -448,7 +428,7 @@ public class Main : MonoBehaviour
 
         guiManagerScript.ReturnButton.transform.DOScale(btnSize, 0.1f)
             .SetEase(Ease.InSine);
-        soundPlayerScript.PlayClickSound();
+        audioManagerScript.PlayClickSound();
 
         if (!guiManagerScript.RollButton.IsActive())
         {

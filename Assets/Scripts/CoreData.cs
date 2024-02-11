@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,7 +34,7 @@ public class CoreData : MonoBehaviour
         { "Rowboat Romance", "Find a rowboat and paddle into tranquility. Enjoy the serenity of the water, creating beautiful memories in the peaceful embrace of nature." },
         { "Stargazing Bliss", "Lay back and gaze at the stars. Revel in the beauty of the night sky, sharing dreams and connecting under the celestial canopy." },
         { "Thrift Adventure", "Embark on a thrift store adventure. Pick outfits for each other, embracing unique styles and creating a fashion-forward date experience." },
-        { "New Skill", "Challenge yourselves with a new skill, like knitting. Learn together and create something special, celebrating the joy of shared accomplishments." },
+        { "Skill Sharing", "Challenge yourselves with a new skill, like knitting. Learn together and create something special, celebrating the joy of shared accomplishments." },
         { "Cooking Class", "Take a cooking class together. Explore new cuisines, learn techniques, and bond over the shared experience of creating a delicious meal." },
         { "Pottery Passion", "Unleash your creativity in a pottery class. Mold and shape clay, creating unique pieces and memories that last a lifetime." },
         { "Starry Night", "Visit a planetarium. Explore the cosmos together, marveling at the stars and expanding your universe in a night of celestial wonder." },
@@ -48,24 +47,24 @@ public class CoreData : MonoBehaviour
         { "Nature Painters", "Bob Ross-inspired painting. Create art together, laugh, and cherish the shared canvas memories in a nature-themed date." },
         { "Foot Race", "Pick a finish line and race there! Thrilling competition and shared joy in reaching the destination together." },
         { "Coin Drive Adventure", "Spontaneous road trip. Set time limits, flip coins at turns. Embrace the journey with excitement and spontaneity." },
-        { "Holiday Fun", "Celebrate random national holidays. Enjoy quirky activities and treats for a delightful, themed date." },
-        { "Nerf Assassin", "Park nerf game. Hunt each other down, first to shoot wins! Exciting and playful competition in nature." },
+        { "Holiday Fun", "Celebrate the current national holiday. Enjoy quirky activities and treats for a delightful, themed date." },
+        { "Nerf Assassin", "Park nerf game. Hunt each other down, first to shoot the other wins! Exciting and playful competition in nature." },
         { "Shower Party", "Lively shower experience. Cool lights, speaker, crafted playlist—turn your shower into a unique party zone." },
-        { "Sporty Day Out", "Play disc golf. Outdoor fun, friendly competition, and an active date filled with shared thrills." },
+        { "Sporty Day Out", "Play sports outside! Corn hole, disc golf, outdoor fun, friendly competition, and an active date filled with shared thrills." },
         { "Ice Cream Delight", "Sweet ice cream date. Explore flavors, create delicious memories, and enjoy the indulgence together." },
         { "Open House Visit", "Explore open houses. Imagine your dream home together, sharing visions and enjoying a playful adventure." },
         { "Hoodie Harmony", "Wear one oversized hoodie together. Cozy togetherness and warmth in shared clothing for the evening." },
         { "Wrestling Tournament", "Playful wrestling matches. Laugh, bond, and strengthen your connection through friendly physical competition." },
         { "Drive-In Movie Night", "Nostalgic drive-in movie. Cozy car bed, blankets, pillows—a night of cinematic magic under the stars." },
         { "Karaoke Adventure", "Karaoke bar fun. Sing your hearts out, revel in musical joy, and enjoy the lively karaoke atmosphere." },
-        { "Dance Off Night", "Just dance competition. Groove, showcase dance moves, and have an energetic night of fun together." },
-        { "Board Game Discovery", "Find quirky games. Explore unique board games for a fun-filled discovery night with laughter and strategy." },
+        { "Dance Off Night", "Just Dance competition! Groove, showcase dance moves, and have an energetic night of fun together." },
+        { "Board Game Discovery", "Find quirky games you haven't played before. Enjoy a fun-filled discovery night with laughter and strategy." },
         { "Massage Night", "Learn to massage. Unwind, connect, and share soothing touch for a night of relaxation and intimacy." },
         { "Bird Feeding", "Park bird feeding. Enjoy nature, observe birds, and create serene moments together in the great outdoors." },
-        { "Playground Fun", "Empty playground play. Embrace your inner child, swing, slide, and share laughter in a playful setting." },
-        { "Laugh Challenge", "Try Not to Laugh. Watch funny videos together, enjoy shared laughter, and take on the challenge." },
+        { "Playground Fun", "Find an empty playground! Embrace your inner child, swing, slide, and share laughter in a playful setting." },
+        { "Laugh Challenge", "Try not to laugh. Watch funny videos together, enjoy shared laughter, and take on the challenge." },
         { "Teaching Moments", "Share skills. Take turns teaching each other something. Create moments of learning and connection in a fun way." },
-        { "Themed Movie Night", "Immersive movie night. Pick a theme, set lighting, and enjoy an atmospheric cinematic experience together." },
+        { "Themed Movie Night", "Immersive movie night. Pick a theme, set the lighting, and enjoy an atmospheric cinematic experience together." },
         { "Artistic Night", "Explore your artistic side with a painting night. Pass the canvas every 10 minutes, creating a collaborative masterpiece filled with shared creativity." },
         { "Early Hike", "Start the day with an early morning hike. Embrace nature, breathe in fresh air, and witness the sunrise together for an invigorating start." },
         { "Adventure Course", "Take on a high adventure course. Navigate treetop obstacles, overcoming challenges and forging a bond through shared thrills and triumphs." },
@@ -76,23 +75,23 @@ public class CoreData : MonoBehaviour
         { "Treasure Hunt", "Create a mini treasure hunt at home. Take turns hiding treasures and crafting clues, adding an element of surprise and adventure to your space." },
         { "Rock Reminders", "Visit a park or stream and find rocks that remind you of each other. Transform them into pet rocks, symbolizing your connection and love." },
         { "Cozy Childhood", "Get cozy and revisit childhood comfort shows. Snuggle up with your favorite snacks, enjoying the nostalgia of shows that shaped your younger years." },
-        { "Flashback Games", "Relive childhood memories with old flash games. Play together, reminisce, and share the joy of retro gaming for a trip down memory lane." },
+        { "Flashback Games", "Relive childhood memories with old games. Play together, reminisce, and share the joy of retro gaming for a trip down memory lane." },
         { "Lock Screen Love", "Design phone lock screens for each other. Express your creativity and affection with personalized screens capturing moments and inside jokes." },
         { "Easter Egg Hunt", "Celebrate with an Easter egg hunt. Hide colorful eggs, hunt together, and share the joy of discovery in a festive and playful adventure." },
         { "Cold Case Fun", "Solve a fake cold case online. Collaborate to crack the mystery, adding a touch of intrigue and teamwork to your date night." },
         { "Chopped Challenge", "Experience a Chopped-style challenge at home. Select mystery ingredients for each other and create unique dishes in a playful culinary competition." },
-        { "Own Holiday", "Invent your own holiday. Create traditions, rituals, and celebrations unique to your relationship—something to look forward to and cherish every year." },
+        { "Holiday Creation", "Invent your own holiday. Create traditions, rituals, and celebrations unique to your relationship—something to look forward to and cherish every year." },
         { "Escape Room", "Navigate the challenges of an escape room. Work together to solve puzzles, test your teamwork, and experience the thrill of breaking free." },
         { "Petting Zoo Love", "Visit a petting zoo. Delight in the company of adorable animals, creating heartwarming moments in the midst of furry friends." },
         { "Tie-Dye Fun", "Get creative with tie-dyeing. Design vibrant and personalized clothing together, adding a splash of color to your shared memories." },
         { "Dance Class", "Take a dance class together. Learn new moves, laugh through missteps, and enjoy the rhythm of dancing in each other's arms." },
         { "Love List", "Create a list of your favorite things about each other. Share and discuss each point, deepening your connection through expressions of love and admiration." },
         { "Game Inventors", "Invent a new game and play it. Embrace creativity and laughter as you bring a unique and personalized game to life for a memorable experience." },
-        { "Zoo Day", "Explore a regular zoo. Laugh, learn about animals, and create lively memories in the vibrant atmosphere." },
-        { "Aquarium Visit", "Dive into an aquarium. Marvel at marine wonders, share the magic, and experience an underwater adventure together." },
-        { "Random Thrifting", "Thrift together, then venture out. Embrace unique finds and create a day full of surprises and shared experiences." },
+        { "Zoo Day", "Explore a zoo. Laugh, learn about animals, and create lively memories in the vibrant atmosphere." },
+        { "Aquarium Visit", "Venture to an aquarium. Enjoy the marine wonders, share the magic, and experience an underwater adventure together." },
+        { "Random Thrifting", "Thrift random clothes together, then venture out. Embrace unique finds and create a day full of surprises and shared experiences." },
         { "Graffiti Art", "Express creativity with graffiti. Create art, laugh, and enjoy a colorful date filled with self-expression and shared moments." },
-        { "Show Binge", "Binge-watch a show. Snuggle up, share snacks, and immerse in the captivating world of your favorite series together." },
+        { "Show Binge", "Binge-watch a show. Snuggle up, share snacks, and immerse in the captivating world of your favorite, or a new series together." },
         { "Horror Car Night", "Car bed, horror movies, cozy blankets—a thrilling cinematic night under the stars in the back of your car." },
         { "YouTube Mysteries", "Explore unsolved mysteries on YouTube. Share intrigue, discuss theories, and enjoy a suspenseful night of entertainment." },
         { "Polaroid Memories", "Capture moments with Polaroid pics. Take snapshots throughout the day, creating a visual diary of shared experiences." },
@@ -101,27 +100,20 @@ public class CoreData : MonoBehaviour
         { "First Date Redux", "Pretend it's your first date again. Meet at a new location, relive the excitement, and create memorable moments together." },
         { "Rollerblading Fun", "Go rollerblading. Enjoy the thrill of gliding, laughter, and the shared joy of an active and fun-filled date." },
         { "Ice Skating Bliss", "Glide on ice together. Enjoy the beauty of ice skating, hold hands, and create delightful memories on the rink." },
-        { "Swimming Getaway", "Go swimming at a fun location—beach or secret pond. Dive into the water, enjoy the sun, and create refreshing memories." },
+        { "Swimming Getaway", "Go swimming at a fun location—beach or secret pond. Dive into the water, enjoy the atmosphere, and create refreshing memories." },
         { "Skinny Dip Adventure", "Embark on a skinny-dipping dare. Share a daring and intimate experience in a secluded and comfortable setting." },
         { "Expert Exploration", "Pretend to be experts. Examine something in your expert personas, share knowledge, and enjoy a playful day of exploration." },
         { "Museum Discovery", "Visit a museum. Immerse in art, history, or science, and share the wonder of discovery together." },
         { "Go Kart Thrills", "Experience go-karting thrills. Race each other, laugh, and create high-speed memories on the track." },
         { "Pedicure Pampering", "Get pedicures together. Relax, pamper yourselves, and enjoy a spa-like experience for a day of indulgent bonding." },
         // 100
-        { "Adopt a Child", "Find and go to an adoption center, then adopt a child in cash. Experience the joys and wonders of parenthood!" }
+        { "Adopt a Child", "Visit an adoption center and adopt a child in cash. Experience the joys and wonders of parenthood!" }
     };
-
 
     // dateventuresLength : Amount of dateventures in the dateventures dictionary
     // dateventureCounter : Number of dateventures completed
-    int dateventuresLength, dateventureCounter;
-
     // rollsThreshold : Represents the threshold for removing from availableRolls before adding back to it
-    const int rollsThreshold = 20;
-
-    // headerQuips : Pre-spin header quips, i.e. "Hey Name1 and Name2. :winky-emoji:"
-    // rollingQuips : Header quips for while rolling, i.e. "What's it gonna be!? :eyes-emoji:"
-    string[] headerQuips, rollingQuips;
+    int dateventuresLength, dateventureCounter, rollsThreshold;
 
     // recentRolls : Track the rollsThreshold most recent rolls
     // availableRolls : The currently available date cards
@@ -132,6 +124,7 @@ public class CoreData : MonoBehaviour
     void Start()
     {
         dateventuresLength = dateventures.Count;
+        rollsThreshold = dateventuresLength / 4; // Set the threshold to a quarter of the size of dateventures
         dateKeys = new List<string>(dateventures.Keys);
         availableRolls = dateKeys;
         recentRolls = new List<string>();
@@ -157,7 +150,7 @@ public class CoreData : MonoBehaviour
         set { availableRolls = value; }
     }
 
-    // Getter for keys
+    // Getter for dateKeys
     public List<string> DateKeys
     {
         get { return dateKeys; }
@@ -176,6 +169,7 @@ public class CoreData : MonoBehaviour
         set { dateventureCounter = value; }
     }
 
+    // Getter for rollsThreshold
     public int RollsThreshold
     {
         get { return rollsThreshold; }
