@@ -1,4 +1,4 @@
-# 🎮 Dateventure
+# 🕹️ Dateventure
 
 Welcome to the **Dateventure** project repository!
 
